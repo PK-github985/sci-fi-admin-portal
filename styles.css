@@ -79,14 +79,19 @@ html, body {
 .form-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 80%;
-    height: 80%;
+    align-items: flex-start; /* Aligns items to the left */
+    position: relative;
+    width: 100%;
+    max-width: 400px; /* Adjust as needed */
+    margin: auto; /* Center the container horizontally */
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
 }
 
 .credits {
-    margin-top: 20px;
     text-align: right;
     font-family: 'Orbitron', sans-serif;
     color: #0f0;
@@ -97,16 +102,12 @@ html, body {
     animation: fadeIn 2s ease-in-out;
     font-size: 14px;
     position: absolute;
-    bottom: 20px;
-    right: 20px;
+    bottom: -50px; /* Space below the form */
+    right: 0;
+    width: 100%;
+    max-width: 400px; /* Match the form container width */
 }
 
-
-
-.form {
-    display: flex;
-    flex-direction: column;
-}
 
 label {
     margin: 10px 0 5px;
