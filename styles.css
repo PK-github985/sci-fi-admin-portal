@@ -76,22 +76,21 @@ html, body {
     z-index: 30;
 }
 
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
 .form-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Aligns items to the left */
-    position: relative;
-    width: 100%;
-    max-width: 400px; /* Adjust as needed */
-    margin: auto; /* Center the container horizontally */
-}
-
-.form {
-    display: flex;
-    flex-direction: column;
+    align-items: center;
 }
 
 .credits {
+    margin-top: 20px;
     text-align: right;
     font-family: 'Orbitron', sans-serif;
     color: #0f0;
@@ -102,10 +101,8 @@ html, body {
     animation: fadeIn 2s ease-in-out;
     font-size: 14px;
     position: absolute;
-    bottom: -50px; /* Space below the form */
+    bottom: -30px;
     right: 0;
-    width: 100%;
-    max-width: 400px; /* Match the form container width */
 }
 
 
