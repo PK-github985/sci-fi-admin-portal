@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-
 html, body {
     margin: 0;
     padding: 0;
@@ -10,17 +9,15 @@ html, body {
     color: #0f0;
     background: #000;
 }
-
 #background-video {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -10;
+    z-index: 0;
     overflow: hidden;
 }
-
 #background-video iframe {
     position: absolute;
     top: 0;
@@ -29,7 +26,6 @@ html, body {
     height: 100%;
     border: none;
 }
-
 .container {
     display: flex;
     justify-content: center;
@@ -38,7 +34,6 @@ html, body {
     position: relative;
     z-index: 10;
 }
-
 .circle {
     width: 200px;
     height: 200px;
@@ -52,17 +47,15 @@ html, body {
     z-index: 20;
     text-align: center;
     box-shadow: 0 0 20px rgba(0, 255, 0, 0.7);
-    animation: spin 4s linear infinite;
+    animation: pulse 2s linear infinite;
 }
-
 .circle h1 {
     margin: 0;
     font-size: 24px;
-    color: #00bfff; /* Change this to your desired color */
+    color: #0f0;
     position: relative;
     z-index: 21; /* Ensures text stays above the spinning circle */
 }
-
 .portal {
     display: none;
     justify-content: center;
@@ -75,7 +68,6 @@ html, body {
     left: 0;
     z-index: 30;
 }
-
 .form-container {
     background: rgba(0, 0, 0, 0.8);
     padding: 30px;
@@ -85,23 +77,41 @@ html, body {
     z-index: 40;
     width: 300px;
 }
-
 .form {
     display: flex;
     flex-direction: column;
 }
-
 label {
     margin: 10px 0 5px;
 }
-
-input {
+input, textarea {
     background: rgba(0, 255, 0, 0.2);
     border: none;
     border-radius: 5px;
     padding: 10px;
     color: #0f0;
     margin-bottom: 10px;
+}
+textarea {
+    resize: vertical;
+}
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #0f0;
+    color: #000;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+button:hover {
+    background: #0c0;
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
 }
 .credits {
     position: fixed;
@@ -120,24 +130,4 @@ input {
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
-}
-
-button {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background: #0f0;
-    color: #000;
-    cursor: pointer;
-    transition: background 0.3s;
-    margin-top: 10px;
-}
-
-button:hover {
-    background: #0c0;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
 }
