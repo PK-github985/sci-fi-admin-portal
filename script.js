@@ -4,40 +4,44 @@ document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById("login-form");
 
     if (welcomeCircle && portal) {
-        // Show the portal when the welcome circle is clicked
         welcomeCircle.addEventListener("click", () => {
             portal.style.display = "flex";
         });
     }
 
     if (loginForm) {
-        // Handle login form submission and trigger fullscreen mode
-        loginForm.addEventListener("submit", (event) => {
-            event.preventDefault(); // Prevent default form submission
+        loginForm.addEventListener("submit", async (event) => {
+            event.preventDefault(); // Prevent immediate form submission
 
-            // Try to enter fullscreen mode
-            const enterFullscreen = () => {
+            try {
                 if (document.documentElement.requestFullscreen) {
-                    return document.documentElement.requestFullscreen();
-                } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-                    return document.documentElement.mozRequestFullScreen();
-                } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-                    return document.documentElement.webkitRequestFullscreen();
-                } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-                    return document.documentElement.msRequestFullscreen();
-                } else {
-                    return Promise.resolve(); // If fullscreen is not supported, continue normally
+                    await document.documentElement.requestFullscreen();
+                } else if (document.documentElement.mozRequestFullScreen) {
+                    await document.documentElement.mozRequestFullScreen();
+                } else if (document.documentElement.webkitRequestFullscreen) {
+                    await document.documentElement.webkitRequestFullscreen();
+                } else if (document.documentElement.msRequestFullscreen) {
+                    await document.documentElement.msRequestFullscreen();
                 }
-            };
 
-            enterFullscreen().then(() => {
+                // Exit fullscreen before submitting the form
                 setTimeout(() => {
-                    loginForm.submit(); // Submit the form after fullscreen is triggered
-                }, 500); // Small delay to ensure fullscreen mode is activated
-            }).catch((error) => {
-                console.warn("Fullscreen mode not supported or blocked by the browser", error);
-                loginForm.submit(); // Fallback: Submit the form if fullscreen fails
-            });
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.mozCancelFullScreen) {
+                        document.mozCancelFullScreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                    }
+
+                    loginForm.submit(); // Submit after exiting fullscreen
+                }, 300); // Short delay to ensure smooth transition
+            } catch (error) {
+                console.warn("Fullscreen request failed:", error);
+                loginForm.submit(); // Fallback: Submit even if fullscreen fails
+            }
         });
     }
 });
