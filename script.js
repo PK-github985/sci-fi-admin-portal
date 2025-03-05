@@ -14,30 +14,24 @@ document.addEventListener("DOMContentLoaded", () => {
             event.preventDefault(); // Prevent default form submission
 
             try {
-                // Request fullscreen mode
-                if (document.documentElement.requestFullscreen) {
-                    await document.documentElement.requestFullscreen();
-                } else if (document.documentElement.mozRequestFullScreen) {
-                    await document.documentElement.mozRequestFullScreen();
-                } else if (document.documentElement.webkitRequestFullscreen) {
-                    await document.documentElement.webkitRequestFullscreen();
-                } else if (document.documentElement.msRequestFullscreen) {
-                    await document.documentElement.msRequestFullscreen();
+                // Function to request fullscreen mode
+                async function requestFullScreen() {
+                    if (document.documentElement.requestFullscreen) {
+                        await document.documentElement.requestFullscreen();
+                    } else if (document.documentElement.mozRequestFullScreen) {
+                        await document.documentElement.mozRequestFullScreen();
+                    } else if (document.documentElement.webkitRequestFullscreen) {
+                        await document.documentElement.webkitRequestFullscreen();
+                    } else if (document.documentElement.msRequestFullscreen) {
+                        await document.documentElement.msRequestFullscreen();
+                    }
                 }
 
-                // Exit fullscreen before redirecting
-                setTimeout(() => {
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                    } else if (document.mozCancelFullScreen) {
-                        document.mozCancelFullScreen();
-                    } else if (document.webkitExitFullscreen) {
-                        document.webkitExitFullscreen();
-                    } else if (document.msExitFullscreen) {
-                        document.msExitFullscreen();
-                    }
+                // Request fullscreen before redirecting
+                await requestFullScreen();
 
-                    // Redirect to the correct admin access page
+                // Redirect while staying in fullscreen mode
+                setTimeout(() => {
                     window.location.href = "https://pk-github985.github.io/sci-fi-admin-portal/adminacsses.html";
                 }, 300);
             } catch (error) {
