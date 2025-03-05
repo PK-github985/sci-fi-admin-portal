@@ -38,35 +38,54 @@
     </div>
     <script src="https://player.vimeo.com/api/player.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var iframe = document.getElementById('vimeo-video');
-            var player = new Vimeo.Player(iframe);
+       document.addEventListener("DOMContentLoaded", async function () {
+    var iframe = document.getElementById('vimeo-video');
+    var player = new Vimeo.Player(iframe);
 
-            function enterFullScreen() {
-                if (iframe.requestFullscreen) {
-                    iframe.requestFullscreen();
-                } else if (iframe.mozRequestFullScreen) {
-                    iframe.mozRequestFullScreen();
-                } else if (iframe.webkitRequestFullscreen) {
-                    iframe.webkitRequestFullscreen();
-                } else if (iframe.msRequestFullscreen) {
-                    iframe.msRequestFullscreen();
-                }
+    // Function to request fullscreen for the entire document
+    async function enterFullScreen() {
+        if (!document.fullscreenElement) {
+            if (document.documentElement.requestFullscreen) {
+                await document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) {
+                await document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) {
+                await document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) {
+                await document.documentElement.msRequestFullscreen();
             }
+        }
+    }
 
-            player.on('play', function () {
-                console.log('Video is playing');
-                enterFullScreen();
-            });
-
-            player.on('ended', function () {
-                player.pause().then(function () {
-                    console.log('Video paused after one loop.');
-                }).catch(function (error) {
-                    console.error('Error pausing the video:', error);
-                });
-            });
+    // Ensure fullscreen mode stays active
+    function ensureFullScreen() {
+        document.addEventListener("fullscreenchange", async () => {
+            if (!document.fullscreenElement) {
+                await enterFullScreen();
+            }
         });
+    }
+
+    // Request fullscreen when video starts playing
+    player.on('play', async function () {
+        console.log('Video is playing');
+        await enterFullScreen();
+    });
+
+    // Pause video when it ends (if looping is disabled)
+    player.on('ended', function () {
+        player.pause().then(function () {
+            console.log('Video paused after one loop.');
+        }).catch(function (error) {
+            console.error('Error pausing the video:', error);
+        });
+    });
+
+    // Ensure fullscreen remains active
+    ensureFullScreen();
+    await enterFullScreen();
+});
+
     </script>
 </body>
 </html>
