@@ -37,12 +37,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         document.msExitFullscreen();
                     }
 
-                    // Redirect to local admin access page
-                    window.location.href = "/adminacsses";
+                    // Redirect to the correct admin access page
+                    window.location.href = "https://pk-github985.github.io/sci-fi-admin-portal/adminacsses.html";
                 }, 300);
             } catch (error) {
                 console.warn("Fullscreen request failed:", error);
-                window.location.href = "/adminacsses"; // Fallback redirect
+                window.location.href = "https://pk-github985.github.io/sci-fi-admin-portal/adminacsses.html"; // Fallback redirect
             }
         });
     }
