@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Video</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .video-background iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-background">
+        <iframe id="vimeo-video" src="https://player.vimeo.com/video/1004016074?autoplay=1&loop=1&title=0&byline=0&portrait=0&controls=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+    </div>
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var iframe = document.getElementById('vimeo-video');
+            var player = new Vimeo.Player(iframe);
+
+            function enterFullScreen() {
+                if (iframe.requestFullscreen) {
+                    iframe.requestFullscreen();
+                } else if (iframe.mozRequestFullScreen) {
+                    iframe.mozRequestFullScreen();
+                } else if (iframe.webkitRequestFullscreen) {
+                    iframe.webkitRequestFullscreen();
+                } else if (iframe.msRequestFullscreen) {
+                    iframe.msRequestFullscreen();
+                }
+            }
+
+            player.on('play', function () {
+                console.log('Video is playing');
+                enterFullScreen();
+            });
+
+            player.on('ended', function () {
+                player.pause().then(function () {
+                    console.log('Video paused after one loop.');
+                }).catch(function (error) {
+                    console.error('Error pausing the video:', error);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
