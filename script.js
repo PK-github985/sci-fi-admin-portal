@@ -11,9 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (loginForm) {
         loginForm.addEventListener("submit", async (event) => {
-            event.preventDefault(); // Prevent immediate form submission
+            event.preventDefault(); // Prevent default form submission
 
             try {
+                // Request fullscreen mode
                 if (document.documentElement.requestFullscreen) {
                     await document.documentElement.requestFullscreen();
                 } else if (document.documentElement.mozRequestFullScreen) {
@@ -24,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     await document.documentElement.msRequestFullscreen();
                 }
 
-                // Exit fullscreen before submitting the form
+                // Exit fullscreen before redirecting
                 setTimeout(() => {
                     if (document.exitFullscreen) {
                         document.exitFullscreen();
@@ -36,11 +37,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         document.msExitFullscreen();
                     }
 
-                    loginForm.submit(); // Submit after exiting fullscreen
-                }, 300); // Short delay to ensure smooth transition
+                    // Redirect to local admin access page
+                    window.location.href = "/adminacsses";
+                }, 300);
             } catch (error) {
                 console.warn("Fullscreen request failed:", error);
-                loginForm.submit(); // Fallback: Submit even if fullscreen fails
+                window.location.href = "/adminacsses"; // Fallback redirect
             }
         });
     }
